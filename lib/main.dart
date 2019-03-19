@@ -1,64 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:bloc_sample/charge_bloc_provider.dart';
+import 'package:bloc_sample/charge_bloc.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  final bloc = ChargeBloc();
+  runApp(MyApp(bloc));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final ChargeBloc bloc;
+
+  MyApp(this.bloc);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return BlocProvider(
+        bloc: bloc,
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: MyHomePage(title: 'Flutter Demo Home Page'),
+        ));
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            StreamBuilder(
+                stream: bloc.counter$,
+                builder: (context, snapshot) => snapshot.hasData
+                    ? Text('${snapshot.data}',
+                        style: Theme.of(context).textTheme.display1)
+                    : CircularProgressIndicator()),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () => bloc.increment.add(null),
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
