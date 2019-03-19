@@ -45,19 +45,29 @@ class MyHomePage extends StatelessWidget{
               stream: bloc.counter$,
               builder: (context,snapshot){
                 return snapshot.hasData
-                ? Text('${snapshot.data}',
+                ? Text(snapshot.data,
                 style: Theme.of(context).textTheme.display1)
                 : CircularProgressIndicator();                
               }
-            )
+            ),
           ],
       )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){bloc.increment.add(null);},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: (){bloc.increment.add('Left');},
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: (){bloc.increment.add('Right');},
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          ),
+        ],
+      )
     );
   }
 }

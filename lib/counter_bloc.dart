@@ -5,17 +5,17 @@ import 'package:rxdart/subjects.dart';
 class CounterBloc{
   int _counter=0;
 
-  final _counter$=BehaviorSubject<int>.seeded(0);
-  final _incrementController=StreamController<void>();
+  final _counter$=BehaviorSubject<String>.seeded('Seed val');
+  final _incrementController=StreamController<String>();
 
   CounterBloc(){
-    //sink時の処理を追加
-    _incrementController.stream.listen((void _){_counter$.add(_counter++);});
+    //sinkにaddした場合の処理を追加
+    _incrementController.stream.listen((String str){_counter$.add(str);});
   }
 
-  Sink<void> get increment{return _incrementController.sink;}
+  Sink<String> get increment{return _incrementController.sink;}
 
-  Stream<int> get counter${return _counter$.stream;}
+  Stream<String> get counter${return _counter$.stream;}
 
   void dispose(){
     _incrementController.close();
