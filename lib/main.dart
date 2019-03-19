@@ -52,10 +52,27 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => bloc.charge(300),
+        onPressed: () => showModal(context, bloc),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
   }
+
+  showModal(context, bloc){
+    showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+      return new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          new ListTile(
+            leading: new Icon(Icons.music_note),
+            title: new Text('Music'),
+            onTap: () => {},
+          ),
+          new RaisedButton(onPressed: () => bloc.charge(300)),
+        ],
+      );
+    });
+  }
 }
+
