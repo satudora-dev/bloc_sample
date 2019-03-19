@@ -3,7 +3,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 class CounterBloc{
-  int _counter=0;
 
   final _counter$=BehaviorSubject<String>.seeded('Seed val');
   final _incrementController=StreamController<String>();

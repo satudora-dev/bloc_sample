@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 import './bloc_provider.dart';
-import './counter_bloc.dart';
+import './app_bloc.dart';
 
 void main(){
-  final bloc=CounterBloc();
-  runApp(MyApp(bloc));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget{
-  final CounterBloc bloc;
+  final AppBloc bloc;
 
-  MyApp(this.bloc);
+  MyApp():bloc=AppBloc();
 
   @override
   Widget build(BuildContext context){
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget{
         ),
         home: MyHomePage(title: 'Flutter Demo'),
       )
-      );
+    );
   }
 }
 
@@ -42,7 +41,16 @@ class MyHomePage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             StreamBuilder(
-              stream: bloc.counter$,
+              stream: bloc.counterBloc.counter$,
+              builder: (context,snapshot){
+                return snapshot.hasData
+                ? Text(snapshot.data,
+                style: Theme.of(context).textTheme.display1)
+                : CircularProgressIndicator();                
+              }
+            ),
+            StreamBuilder(
+              stream: bloc.reverseCounterBloc.counter$,
               builder: (context,snapshot){
                 return snapshot.hasData
                 ? Text(snapshot.data,
@@ -57,12 +65,16 @@ class MyHomePage extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           FloatingActionButton(
-            onPressed: (){bloc.increment.add('Left');},
+            onPressed: (){
+              bloc.counterBloc.increment.add('Left');
+            },
             tooltip: 'Increment',
             child: Icon(Icons.add),
           ),
           FloatingActionButton(
-            onPressed: (){bloc.increment.add('Right');},
+            onPressed: (){
+              bloc.counterBloc.increment.add('Right');
+            },
             tooltip: 'Increment',
             child: Icon(Icons.add),
           ),

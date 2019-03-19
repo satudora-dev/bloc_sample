@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './counter_bloc.dart';
+import './app_bloc.dart';
 
 class BlocProvider extends InheritedWidget{
-  final CounterBloc bloc;
+  final AppBloc bloc;
 
   BlocProvider({Key key,this.bloc,child}):super(key: key,child: child);
 
@@ -12,7 +12,7 @@ class BlocProvider extends InheritedWidget{
     return true;
   }
 
-  static CounterBloc of(BuildContext context){
+  static AppBloc of(BuildContext context){
     return (context.inheritFromWidgetOfExactType(BlocProvider) as BlocProvider).bloc;
   }
 }
