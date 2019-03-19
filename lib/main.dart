@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             StreamBuilder(
-                stream: bloc.counter$,
+                stream: bloc.chargedMoney$,
                 builder: (context, snapshot) => snapshot.hasData
                     ? Text('${snapshot.data}',
                         style: Theme.of(context).textTheme.display1)
@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => bloc.increment.add(null),
+        onPressed: () => bloc.charge(300),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
