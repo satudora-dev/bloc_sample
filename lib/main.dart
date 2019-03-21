@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:bloc_provider/bloc_provider.dart';
 
-void main() => runApp(MyApp());
+import './counter_bloc.dart';
+
+void main() => runApp(
+  BlocProvider<CounterBloc>(
+    creator: (_context, _bag)=>CounterBloc(),
+    child: MyApp(),
+  ),
+);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final bloc=BlocProvider.of<CounterBloc>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -20,7 +29,23 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Bloc Test')),
+        body: Center(
+          child: StreamBuilder<int>(
+            stream: bloc.count,
+            initialData: bloc.count.value,
+            builder: (context,snap)=>Text(
+                'count: ${snap.data}',
+                style: Theme.of(context).textTheme.title,
+              ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: (){bloc.increment.add(null);},
+        ),
+      ),
     );
   }
 }
