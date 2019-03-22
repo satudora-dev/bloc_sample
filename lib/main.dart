@@ -3,16 +3,20 @@ import 'package:bloc_provider/bloc_provider.dart';
 
 import './counter_bloc.dart';
 import './even_counter_bloc.dart';
+import './connection_bloc.dart';
 
 void main() => runApp(
   BlocProviderTree(
     blocProviders: [
-      BlocProvider<CounterBloc>(
+      /*BlocProvider<CounterBloc>(
         creator: (context,_bag)=>CounterBloc(),
       ),
       BlocProvider<EvenCounterBloc>(
         creator: (context,_bag)=>EvenCounterBloc(),
-      ),      
+      ),*/
+      BlocProvider<ConnectionBloc>(
+        creator: (context,_bag)=>ConnectionBloc(),
+      ),
     ],
     child: MyApp(),
   ),
@@ -22,8 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final counterBloc=BlocProvider.of<CounterBloc>(context);
-    final evenCounterBloc=BlocProvider.of<EvenCounterBloc>(context);
+    final connectionBloc=BlocProvider.of<ConnectionBloc>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -44,16 +47,16 @@ class MyApp extends StatelessWidget {
           child: Row(
             children: <Widget>[
               StreamBuilder<int>(
-                stream: counterBloc.count,
-                initialData: counterBloc.count.value,
+                stream: connectionBloc.counterBloc.count,
+                initialData: connectionBloc.counterBloc.count.value,
                 builder: (context,snap)=>Text(
                   'count: ${snap.data}',
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
               StreamBuilder<int>(
-                stream: evenCounterBloc.count,
-                initialData: evenCounterBloc.count.value,
+                stream: connectionBloc.evenCounterBloc.count,
+                initialData: connectionBloc.evenCounterBloc.count.value,
                 builder: (context,snap)=>Text(
                   'count: ${snap.data}',
                   style: Theme.of(context).textTheme.title,
@@ -65,8 +68,8 @@ class MyApp extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: (){
-            counterBloc.increment.add(null);
-            evenCounterBloc.increment.add(null);
+            connectionBloc.counterBloc.increment.add(null);
+            //evenCounterBloc.increment.add(null);
           },
         ),
       ),

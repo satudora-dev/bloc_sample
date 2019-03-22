@@ -3,16 +3,14 @@ import 'package:bloc_provider/bloc_provider.dart';
 
 class EvenCounterBloc implements Bloc{
   final _countController=BehaviorSubject<int>.seeded(0);
-  final _incrementController=PublishSubject<void>();
+  final _incrementController=PublishSubject<int>();
 
   EvenCounterBloc(){
-    _incrementController
-      .scan<int>((sum,_v,_i)=>sum+2,0)
-      .pipe(_countController);//_counterControllerにstreamを流す?
+    _incrementController.listen((_v)=>_countController.add(_v*2));
   }
 
   ValueObservable<int> get count=>_countController;
-  Sink<void> get increment=>_incrementController.sink;
+  Sink<int> get increment=>_incrementController.sink;
 
   @override
   void dispose() async{

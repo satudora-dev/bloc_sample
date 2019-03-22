@@ -7,8 +7,8 @@ class CounterBloc implements Bloc{
 
   CounterBloc(){
     _incrementController
-      .scan<int>((sum,_v,_i)=>sum+1,0)
-      .pipe(_countController);
+      .scan<int>((sum,_v,_i)=>sum+1,0)//受け取った値につきループし，蓄積値sumを更新
+      .pipe(_countController);//結果を_countControllerに流す
   }
 
   ValueObservable<int> get count=>_countController;
