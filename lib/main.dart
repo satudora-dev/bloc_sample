@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:bloc_provider/bloc_provider.dart';
 
 import './counter_bloc.dart';
+import './even_counter_bloc.dart';
 
 void main() => runApp(
-  BlocProvider<CounterBloc>(
-    creator: (_context, _bag)=>CounterBloc(),
+  BlocProviderTree(
+    blocProviders: [
+      BlocProvider<CounterBloc>(
+        creator: (context,_bag)=>CounterBloc(),
+      ),
+      BlocProvider<EvenCounterBloc>(
+        creator: (context,_bag)=>EvenCounterBloc(),
+      ),      
+    ],
     child: MyApp(),
   ),
 );
@@ -14,7 +22,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final bloc=BlocProvider.of<CounterBloc>(context);
+    final counterBloc=BlocProvider.of<CounterBloc>(context);
+    final evenCounterBloc=BlocProvider.of<EvenCounterBloc>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -32,18 +41,33 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Bloc Test')),
         body: Center(
-          child: StreamBuilder<int>(
-            stream: bloc.count,
-            initialData: bloc.count.value,
-            builder: (context,snap)=>Text(
-                'count: ${snap.data}',
-                style: Theme.of(context).textTheme.title,
+          child: Row(
+            children: <Widget>[
+              StreamBuilder<int>(
+                stream: counterBloc.count,
+                initialData: counterBloc.count.value,
+                builder: (context,snap)=>Text(
+                  'count: ${snap.data}',
+                  style: Theme.of(context).textTheme.title,
+                ),
               ),
+              StreamBuilder<int>(
+                stream: evenCounterBloc.count,
+                initialData: evenCounterBloc.count.value,
+                builder: (context,snap)=>Text(
+                  'count: ${snap.data}',
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+            ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: (){bloc.increment.add(null);},
+          onPressed: (){
+            counterBloc.increment.add(null);
+            evenCounterBloc.increment.add(null);
+          },
         ),
       ),
     );
