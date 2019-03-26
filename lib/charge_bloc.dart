@@ -8,20 +8,21 @@ class ChargeBloc {
   int _chargedMoney = 0;
 
   final _chargedMoney$ = BehaviorSubject<int>.seeded(0);
-  final _incrementController = StreamController<void>();
+  final _incrementController = StreamController<int>();
 
   ChargeBloc() {
-    _incrementController.stream.listen((void _) => _chargedMoney$.add(_chargedMoney));
+    _incrementController.stream.listen((additionalMoney) => _charge(additionalMoney));
   }
 
-  Sink<void> get addMoney => _incrementController.sink;
+  Sink<int> get addMoney => _incrementController.sink;
 
   Stream<int> get chargedMoney$ => _chargedMoney$.stream;
 
-  charge(int chargeMoney) async {
-    int newChargedMoney = await ChargeAPIMock().post(chargeMoney);
+
+  void _charge(int money) async {
+    int newChargedMoney = await ChargeAPIMock().post(money);
     _chargedMoney += newChargedMoney;
-    addMoney.add(_chargedMoney);
+    _chargedMoney$.add(_chargedMoney);
   }
 
   void dispose() {

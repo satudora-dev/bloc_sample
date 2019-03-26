@@ -44,10 +44,15 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             StreamBuilder(
                 stream: bloc.chargedMoney$,
-                builder: (context, snapshot) => snapshot.hasData
-                    ? Text('${snapshot.data}',
-                        style: Theme.of(context).textTheme.display1)
-                    : CircularProgressIndicator()),
+                builder: (context, snapshot) =>
+                  snapshot.hasData
+                      ? Text('${snapshot.data}',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .display1)
+                      : CircularProgressIndicator())
+                ,
           ],
         ),
       ),
@@ -90,13 +95,13 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   submit(bloc){
     _formKey.currentState.save();
-    bloc.charge(_chargeMoney);
+    bloc.addMoney.add(_chargeMoney);
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of(context);
     // Build a Form widget using the _formKey we created above
+    final bloc = BlocProvider.of(context);
     return Form(
       key: _formKey,
       child: Column(
