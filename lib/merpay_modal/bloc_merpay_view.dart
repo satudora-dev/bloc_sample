@@ -14,11 +14,11 @@ class BlocMerpayView extends StatelessWidget {
         RaisedButton(
           child: Text('+'),
           onPressed: () {
-            bloc.chargeBloc.visualize.add(true);
+            bloc.chargeViewVisualize.add(true);
           },
         ),
         StreamBuilder(
-          stream: bloc.chargeBloc.visible,
+          stream: bloc.chargeViewVisible,
           initialData: false,
           builder: (context, snap) {
             if (snap.data) {
@@ -29,7 +29,7 @@ class BlocMerpayView extends StatelessWidget {
           },
         ),
         StreamBuilder(
-          stream: bloc.chargingBloc.visible,
+          stream: bloc.chargingViewVisible,
           initialData: false,
           builder: (context, snap) {
             if (snap.data) {
