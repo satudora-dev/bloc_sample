@@ -10,7 +10,8 @@ class BlocMerpayView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MerpayModalBloc>(context);
     return Stack(
-      children: [
+      children: <Widget>[
+        Container(),
         RaisedButton(
           child: Text('+'),
           onPressed: () {
@@ -22,7 +23,15 @@ class BlocMerpayView extends StatelessWidget {
           initialData: false,
           builder: (context, snap) {
             if (snap.data) {
-              return BlocConfirmView();
+              return Positioned.fill(
+                child: Container(
+                  color: Color.fromARGB(100, 0, 0, 0),
+                  child: Padding(
+                    padding: EdgeInsets.all(50),
+                    child: BlocChargeView(),
+                  ),
+                ),
+              );
             } else {
               return Container();
             }
@@ -33,7 +42,16 @@ class BlocMerpayView extends StatelessWidget {
           initialData: false,
           builder: (context, snap) {
             if (snap.data) {
-              return BlocChargingView();
+              //return BlocChargingView();
+              return Positioned.fill(
+                child: Container(
+                  color: Color.fromARGB(100, 0, 0, 0),
+                  child: Padding(
+                    padding: EdgeInsets.all(50.0),
+                    child: BlocChargingView(),
+                  ),
+                ),
+              );
             } else {
               return Container();
             }

@@ -28,35 +28,13 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(title: Text('Bloc Test')),
-        body: Center(
-          child: Row(
-            children: <Widget>[
-              StreamBuilder<int>(
-                stream: connectionBloc.counterBloc.count,
-                initialData: connectionBloc.counterBloc.count.value,
-                builder: (context, snap) => Text(
-                      'count: ${snap.data}',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-              ),
-              StreamBuilder<int>(
-                stream: connectionBloc.evenCounterBloc.count,
-                initialData: connectionBloc.evenCounterBloc.count.value,
-                builder: (context, snap) => Text(
-                      'count: ${snap.data}',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-              ),
-              BlocProviderTree(
-                blocProviders: [
-                  BlocProvider<MerpayModalBloc>(
-                    creator: (context, _bag) => MerpayModalBloc(),
-                  ),
-                ],
-                child: BlocMerpayView(),
-              ),
-            ],
-          ),
+        body: BlocProviderTree(
+          blocProviders: [
+            BlocProvider<MerpayModalBloc>(
+              creator: (context, _bag) => MerpayModalBloc(),
+            ),
+          ],
+          child: BlocMerpayView(),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

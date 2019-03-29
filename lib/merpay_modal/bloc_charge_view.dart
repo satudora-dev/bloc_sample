@@ -3,7 +3,7 @@ import 'package:bloc_provider/bloc_provider.dart';
 
 import './merpay_modal_bloc.dart';
 
-class BlocConfirmView extends StatelessWidget {
+class BlocChargeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MerpayModalBloc>(context).chargeBloc;
