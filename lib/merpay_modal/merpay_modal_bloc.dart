@@ -22,7 +22,7 @@ class MerpayModalBloc extends Bloc {
 
     _chargeViewVisualizeController
         .listen((_val) => _chargeViewVisible.add(_val));
-        
+
     _chargingViewVisualizeController
         .listen((_val) => _chargingViewVisible.add(_val));
 
@@ -32,14 +32,19 @@ class MerpayModalBloc extends Bloc {
       }
     });
 
-    _completeProcedureController.listen((_) {
-      chargeViewVisualize.add(false);
-      chargingViewVisualize.add(false);
-    });
-
     _chargingBloc.chargeCompleted.listen((_val) {
       if (_val == true) {
         _completeProcedureController.add(null);
+      }
+    });
+
+    _completeProcedureController.listen((_) {
+      chargingViewVisualize.add(false);
+    });
+
+    _chargingViewVisible.listen((_val) {
+      if (_val == false) {
+        chargeViewVisualize.add(false);
       }
     });
   }
