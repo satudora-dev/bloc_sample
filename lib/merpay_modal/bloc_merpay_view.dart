@@ -22,7 +22,7 @@ class BlocMerpayViewState extends State<BlocMerpayView>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(milliseconds: 2000),
+      duration: Duration(milliseconds: 500),
       vsync: this,
     );
     animation = CurvedAnimation(
@@ -30,7 +30,6 @@ class BlocMerpayViewState extends State<BlocMerpayView>
       curve: Curves.easeIn,
     );
     _chargeViewColor = Color.fromARGB(0, 0, 0, 0);
-
   }
 
   @override
@@ -43,12 +42,7 @@ class BlocMerpayViewState extends State<BlocMerpayView>
           child: Text('+'),
           onPressed: () {
             bloc.chargeViewVisualize.add(true);
-              _chargeViewColor = Color.fromARGB(100, 0, 0, 0);
-            /*setState(() {
-              print(_chargeViewColor);
-              _chargeViewColor = Color.fromARGB(100, 0, 0, 0);
-              print(_chargeViewColor);
-            });*/
+            controller.forward();
           },
         ),
         StreamBuilder(
@@ -57,13 +51,14 @@ class BlocMerpayViewState extends State<BlocMerpayView>
           builder: (context, snap) {
             if (snap.data) {
               return Positioned.fill(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 1000),
-                  curve: Curves.easeInOut,
-                  color: _chargeViewColor,
-                  child: Padding(
-                    padding: EdgeInsets.all(50),
-                    child: BlocChargeView(),
+                child: Container(
+                  color: Color.fromARGB(100, 0, 0, 0),
+                  child: FadeTransition(
+                    opacity: animation,
+                    child: Padding(
+                      padding: EdgeInsets.all(50),
+                      child: BlocChargeView(),
+                    ),
                   ),
                 ),
               );

@@ -39,13 +39,8 @@ class MerpayModalBloc extends Bloc {
     });
 
     _completeProcedureController.listen((_) {
+      chargeViewVisualize.add(false);
       chargingViewVisualize.add(false);
-    });
-
-    _chargingViewVisible.listen((_val) {
-      if (_val == false) {
-        chargeViewVisualize.add(false);
-      }
     });
   }
 
