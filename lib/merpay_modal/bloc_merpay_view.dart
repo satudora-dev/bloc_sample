@@ -4,6 +4,8 @@ import 'package:bloc_provider/bloc_provider.dart';
 import './merpay_modal_bloc.dart';
 import './bloc_charge_view.dart';
 import './bloc_charging_view.dart';
+import './bloc_charging_stream_view.dart';
+
 
 class BlocMerpayView extends StatefulWidget {
   @override
@@ -67,26 +69,7 @@ class BlocMerpayViewState extends State<BlocMerpayView>
             }
           },
         ),
-        StreamBuilder(
-          stream: bloc.chargingViewVisible,
-          initialData: false,
-          builder: (context, snap) {
-            if (snap.data) {
-              //return BlocChargingView();
-              return Positioned.fill(
-                child: Container(
-                  color: Color.fromARGB(100, 0, 0, 0),
-                  child: Padding(
-                    padding: EdgeInsets.all(100.0),
-                    child: BlocChargingView(),
-                  ),
-                ),
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
+        BlocChargingStreamView()
       ],
     );
   }
