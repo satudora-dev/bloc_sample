@@ -13,11 +13,12 @@ class BlocChargingStreamView extends StatefulWidget {
 
 class BlocChargingStreamViewState extends State<BlocChargingStreamView>
     with TickerProviderStateMixin {
-  //Color _chargingViewColor;
   Color _chargeViewColor;
 
   AnimationController fadeController;
   Animation<double> fadeAnimation;
+
+  StreamSubscription _streamSubscription;
 
   @override
   void initState() {
@@ -32,23 +33,17 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
     );
     _chargeViewColor = Color.fromARGB(0, 0, 0, 0);
 
-    //
     fadeController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        //fadeController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        //fadeController.forward();
+      if(status == AnimationStatus.dismissed) {
         final bloc = BlocProvider.of<MerpayModalBloc>(context).chargingBloc;
         bloc.completeCharge.add(null);
       }
     });
 
     final bloc = BlocProvider.of<MerpayModalAnimationBloc>(context);
-    if (bloc.animationCompleted != _previousStream) {
-      _streamSubscription?.cancel();
-      _previousStream = bloc.animationCompleted;
-      _listen(bloc.animationCompleted);
-    }
+    _streamSubscription = bloc.animationCompleted.listen((value) {
+      startAnimation();
+    });
   }
 
   startAnimation() {
@@ -59,15 +54,6 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
     } else if (status == AnimationStatus.completed) {
       fadeController.reverse();
     }
-  }
-
-  StreamSubscription _streamSubscription;
-  Stream _previousStream;
-
-  void _listen(Stream<bool> stream) {
-    _streamSubscription = stream.listen((value) {
-      startAnimation();
-    });
   }
 
   @override
@@ -84,7 +70,6 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
         initialData: false,
         builder: (context, snap) {
           if (snap.data) {
-//return BlocChargingView();
             return Positioned.fill(
               child: Container(
                   color: Color.fromARGB(100, 0, 0, 0),
