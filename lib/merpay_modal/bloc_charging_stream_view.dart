@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bloc_provider/bloc_provider.dart';
-import './bloc_charging_view.dart';
 import 'dart:async';
 
 import './merpay_modal_bloc.dart';
@@ -13,12 +12,12 @@ class BlocChargingStreamView extends StatefulWidget {
 
 class BlocChargingStreamViewState extends State<BlocChargingStreamView>
     with TickerProviderStateMixin {
-  Color _chargeViewColor;
-
   AnimationController fadeController;
   Animation<double> fadeAnimation;
 
   StreamSubscription _streamSubscription;
+
+  MerpayModalAnimationBloc _animationBloc;
 
   @override
   void initState() {
@@ -31,17 +30,16 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
       parent: fadeController,
       curve: Curves.easeIn,
     );
-    _chargeViewColor = Color.fromARGB(0, 0, 0, 0);
 
     fadeController.addStatusListener((status) {
-      if(status == AnimationStatus.dismissed) {
+      if (status == AnimationStatus.dismissed) {
         final bloc = BlocProvider.of<MerpayModalBloc>(context).chargingBloc;
         bloc.completeCharge.add(null);
       }
     });
 
-    final bloc = BlocProvider.of<MerpayModalAnimationBloc>(context);
-    _streamSubscription = bloc.animationCompleted.listen((value) {
+    _animationBloc = BlocProvider.of<MerpayModalAnimationBloc>(context);
+    _streamSubscription = _animationBloc.animationCompleted.listen((value) {
       startAnimation();
     });
   }
@@ -77,7 +75,21 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
                     opacity: fadeAnimation,
                     child: Padding(
                       padding: EdgeInsets.all(100.0),
-                      child: BlocChargingView(),
+                      child: Container(
+                        color: Colors.amber[100],
+                        child: Column(
+                          children: <Widget>[
+                            Text('チャージしています'),
+                            RaisedButton(
+                              child: Text('Done'),
+                              onPressed: () {
+                                //bloc.completeCharge.add(null);
+                                _animationBloc.completeAnimation.add(null);
+                              },
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   )),
             );

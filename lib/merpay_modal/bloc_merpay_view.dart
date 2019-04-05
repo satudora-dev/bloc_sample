@@ -3,7 +3,6 @@ import 'package:bloc_provider/bloc_provider.dart';
 
 import './merpay_modal_bloc.dart';
 import './bloc_charge_view.dart';
-import './bloc_charging_view.dart';
 import './bloc_charging_stream_view.dart';
 
 
