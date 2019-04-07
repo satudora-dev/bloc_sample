@@ -4,12 +4,12 @@ import 'dart:async';
 
 import './merpay_modal_bloc.dart';
 
-class BlocChargingStreamView extends StatefulWidget {
+class BlocChargingView extends StatefulWidget {
   @override
-  BlocChargingStreamViewState createState() => BlocChargingStreamViewState();
+  BlocChargingViewState createState() => BlocChargingViewState();
 }
 
-class BlocChargingStreamViewState extends State<BlocChargingStreamView>
+class BlocChargingViewState extends State<BlocChargingView>
     with TickerProviderStateMixin {
   AnimationController fadeController;
   Animation<double> fadeAnimation;
