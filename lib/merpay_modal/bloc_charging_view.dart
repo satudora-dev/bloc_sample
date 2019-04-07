@@ -68,28 +68,46 @@ class BlocChargingViewState extends State<BlocChargingView>
           if (snap.data) {
             return Positioned.fill(
               child: Container(
-                  color: Color.fromARGB(100, 0, 0, 0),
-                  child: FadeTransition(
-                    opacity: fadeAnimation,
-                    child: Padding(
-                      padding: EdgeInsets.all(100.0),
-                      child: Container(
-                        color: Colors.amber[100],
-                        child: Column(
-                          children: <Widget>[
-                            Text('チャージしています'),
-                            RaisedButton(
-                              child: Text('Done'),
-                              onPressed: () {
-                                //bloc.completeCharge.add(null);
-                                _bloc.completeAnimation.add(null);
-                              },
-                            )
-                          ],
-                        ),
+                color: Color.fromARGB(100, 0, 0, 0),
+                child: FadeTransition(
+                  opacity: fadeAnimation,
+                  child: Padding(
+                    padding: EdgeInsets.all(100.0),
+                    child: Container(
+                      color: Colors.amber[100],
+                      child: Column(
+                        children: <Widget>[
+                          Text('チャージしています'),
+                          RaisedButton(
+                            child: Text('Done'),
+                            onPressed: () {
+                              //bloc.completeCharge.add(null);
+                              _bloc.completeAnimation.add(null);
+                            },
+                          ),
+                          RaisedButton(
+                            child: Text('Change Color'),
+                            onPressed: () {
+                              _bloc.chargingBloc.changeColor
+                                  .add(Color.fromARGB(100, 0, 0, 0));
+                            },
+                          ),
+                          StreamBuilder(
+                            stream: _bloc.chargingBloc.color,
+                            builder: (context, snap) => AnimatedContainer(
+                                  padding: EdgeInsets.all(50),
+                                  duration: Duration(
+                                    milliseconds: 1000,
+                                  ),
+                                  color: snap.data,
+                                ),
+                          ),
+                        ],
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
             );
           } else {
             return Container();
