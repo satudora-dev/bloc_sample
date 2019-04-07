@@ -3,7 +3,6 @@ import 'package:bloc_provider/bloc_provider.dart';
 import 'dart:async';
 
 import './merpay_modal_bloc.dart';
-import './merpay_modal_animation_bloc.dart';
 
 class BlocChargingStreamView extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
 
   StreamSubscription _streamSubscription;
 
-  MerpayModalAnimationBloc _animationBloc;
+  MerpayModalBloc _bloc;
 
   @override
   void initState() {
@@ -38,8 +37,8 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
       }
     });
 
-    _animationBloc = BlocProvider.of<MerpayModalAnimationBloc>(context);
-    _streamSubscription = _animationBloc.animationCompleted.listen((value) {
+    _bloc = BlocProvider.of<MerpayModalBloc>(context);
+    _streamSubscription = _bloc.animationCompleted.listen((value) {
       startAnimation();
     });
   }
@@ -62,9 +61,8 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<MerpayModalBloc>(context);
     return StreamBuilder(
-        stream: bloc.chargingViewVisible,
+        stream: _bloc.chargingViewVisible,
         initialData: false,
         builder: (context, snap) {
           if (snap.data) {
@@ -84,7 +82,7 @@ class BlocChargingStreamViewState extends State<BlocChargingStreamView>
                               child: Text('Done'),
                               onPressed: () {
                                 //bloc.completeCharge.add(null);
-                                _animationBloc.completeAnimation.add(null);
+                                _bloc.completeAnimation.add(null);
                               },
                             )
                           ],

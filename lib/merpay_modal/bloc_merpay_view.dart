@@ -13,8 +13,6 @@ class BlocMerpayView extends StatefulWidget {
 
 class BlocMerpayViewState extends State<BlocMerpayView>
     with TickerProviderStateMixin {
-  Color _chargeViewColor;
-  Color _chargingViewColor;
 
   AnimationController controller;
   Animation<double> animation;
@@ -30,7 +28,6 @@ class BlocMerpayViewState extends State<BlocMerpayView>
       parent: controller,
       curve: Curves.easeIn,
     );
-    _chargeViewColor = Color.fromARGB(0, 0, 0, 0);
   }
 
   @override

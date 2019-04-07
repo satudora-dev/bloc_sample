@@ -4,7 +4,6 @@ import 'package:bloc_provider/bloc_provider.dart';
 import './connection_bloc.dart';
 import './merpay_modal/merpay_modal_bloc.dart';
 import './merpay_modal/bloc_merpay_view.dart';
-import './merpay_modal/merpay_modal_animation_bloc.dart';
 
 void main() => runApp(
       BlocProviderTree(
@@ -33,9 +32,6 @@ class MyApp extends StatelessWidget {
           blocProviders: [
             BlocProvider<MerpayModalBloc>(
               creator: (context, _bag) => MerpayModalBloc(),
-            ),
-            BlocProvider<MerpayModalAnimationBloc>(
-              creator: (context, _bag) => MerpayModalAnimationBloc(),
             ),
           ],
           child: BlocMerpayView(),
