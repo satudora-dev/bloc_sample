@@ -3,6 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 
 class MerpayChargingBloc extends Bloc {
+  
   final _chargeCompleted = BehaviorSubject<bool>.seeded(false);
   final _completeChargeController = PublishSubject<void>();
 

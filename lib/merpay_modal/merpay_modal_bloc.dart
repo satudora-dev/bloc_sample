@@ -43,6 +43,7 @@ class MerpayModalBloc extends Bloc {
 
     _completeAnimationController.listen((_) {
       _animationCompleted.add(true);
+      _completeProcedureController.add(null);
     });
 
     _completeProcedureController.listen((_) {
@@ -59,7 +60,7 @@ class MerpayModalBloc extends Bloc {
 
   ValueObservable<bool> get chargingViewVisible => _chargingViewVisible;
   Sink<bool> get chargingViewVisualize => _chargingViewVisualizeController;
-  
+
   ValueObservable<bool> get animationCompleted => _animationCompleted;
   Sink<void> get completeAnimation => _completeAnimationController;
 
@@ -76,7 +77,7 @@ class MerpayModalBloc extends Bloc {
 
     await _animationCompleted.close();
     await _completeAnimationController.close();
-    
+
     await _completeProcedureController.close();
   }
 }
