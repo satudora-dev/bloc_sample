@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Calendar/CalendarScreen.dart';
 import '../Calendar/OriginalCalendarScreen.dart';
+import '../Calendar/CalendarCarouselScreen.dart';
 
 class CalendarSelectScreen extends StatelessWidget {
   @override
@@ -17,13 +18,21 @@ class CalendarSelectScreen extends StatelessWidget {
                         builder: (context) => CalendarScreen()));
               }),
           RaisedButton(
+              child: Text("flutter_calendar_carousel"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CalendarCarouselScreen()));
+              }),
+          RaisedButton(
               child: Text("オリジナルカレンダー"),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => OriginalCalendarScreen()));
-              })
+              }),
         ]));
   }
 }
