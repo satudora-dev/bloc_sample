@@ -1,15 +1,15 @@
-import '../Calendar/CalendarScreen.dart';
+import '../Calendar/CalendarSelectScreen.dart';
 import 'package:flutter/material.dart';
 
 class GoToCalendarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-        child: Text("カレンダー"),
+        child: Text("カレンダー選択画面へ"),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CalendarScreen()),
+            MaterialPageRoute(builder: (context) => CalendarSelectScreen()),
           );
           /*
                 Navigator.of(context).push(
