@@ -13,8 +13,7 @@ class CalendarCarouselScreen extends StatefulWidget {
 }
 
 class _CalendarCarouselState extends State<CalendarCarouselScreen> {
-  DateTime _currentDate = DateTime(2019, 1, 3);
-  DateTime _currentDate2 = DateTime.now();
+  DateTime _currentDate = DateTime.now();
   String _currentMonth = '';
 
 //  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
@@ -75,7 +74,7 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
       weekFormat: false,
       markedDatesMap: _markedDateMap,
       height: 350.0,
-      selectedDateTime: _currentDate2,
+      selectedDateTime: _currentDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 2,
@@ -92,7 +91,7 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
       selectedDayTextStyle: TextStyle(
         color: Colors.green,
       ),
-      minSelectedDate: _currentDate,
+      minSelectedDate: _currentDate.subtract(Duration(days: 60)),
       maxSelectedDate: _currentDate.add(Duration(days: 60)),
 //      inactiveDateColor: Colors.black12,
       onCalendarChanged: (DateTime date) {
