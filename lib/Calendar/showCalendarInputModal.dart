@@ -1,34 +1,10 @@
 import 'package:flutter/material.dart';
+import './CalendarInputForm.dart';
 
 void showCalendarInputModal(BuildContext context) {
-  Navigator.push(
-    context,
-    PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return CalendarInputModal(); //遷移先
-      },
-      /*
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(0.0, 1.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(0.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    */
-    ),
-  );
+  showDialog(
+      context: context,
+      builder: (BuildContext context) => CalendarInputModal());
 }
 
 class CalendarInputModal extends StatefulWidget {
@@ -46,11 +22,12 @@ class _CalendarInputModalState extends State<CalendarInputModal> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      Text("モーダルです"),
-      FlatButton(
-          child: Text("閉じる"), onPressed: () => Navigator.of(context).pop())
-    ]));
+    return Dialog(
+        child: Center(
+            child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[CalendarInputForm()]))));
   }
 }
