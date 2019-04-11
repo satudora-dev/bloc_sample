@@ -1,7 +1,7 @@
 import '../Calendar/CalendarSelectScreen.dart';
 import 'package:flutter/material.dart';
 
-class GoToCalendarButton extends StatelessWidget {
+class ButtonToCalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
