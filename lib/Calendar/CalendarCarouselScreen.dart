@@ -5,6 +5,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import './showCalendarInputModal.dart';
 
 class CalendarCarouselScreen extends StatefulWidget {
   @override
@@ -63,8 +64,9 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
     _calendarCarousel = CalendarCarousel<Event>(
       todayBorderColor: Colors.green,
       onDayPressed: (DateTime date, List<Event> events) {
-        this.setState(() => _currentDate2 = date);
-        events.forEach((event) => print(event.title));
+        showCalendarInputModal(context);
+        //this.setState(() => _currentDate2 = date);
+        //events.forEach((event) => print(event.title));
       },
       weekendTextStyle: TextStyle(
         color: Colors.red,
