@@ -13,7 +13,7 @@ class CalendarCarouselScreen extends StatefulWidget {
 
 class _CalendarCarouselState extends State<CalendarCarouselScreen> {
   DateTime _currentDate = DateTime(2019, 1, 3);
-  DateTime _currentDate2 = DateTime(2019, 1, 3);
+  DateTime _currentDate2 = DateTime.now();
   String _currentMonth = '';
 
 //  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
@@ -55,39 +55,6 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
   @override
   void initState() {
     /// Add more events to _markedDateMap EventList
-    _markedDateMap.add(
-        new DateTime(2018, 12, 25),
-        new Event(
-          date: new DateTime(2018, 12, 25),
-          title: 'Event 5',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.add(
-        new DateTime(2018, 12, 10),
-        new Event(
-          date: new DateTime(2018, 12, 10),
-          title: 'Event 4',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.addAll(new DateTime(2018, 12, 11), [
-      new Event(
-        date: new DateTime(2018, 12, 11),
-        title: 'Event 1',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2018, 12, 11),
-        title: 'Event 2',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2018, 12, 11),
-        title: 'Event 3',
-        icon: _eventIcon,
-      ),
-    ]);
     super.initState();
   }
 
