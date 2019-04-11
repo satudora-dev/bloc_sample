@@ -50,7 +50,7 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
     },
   );
 
-  CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader;
+  CalendarCarousel _calendarCarousel;
 
   @override
   void initState() {
@@ -58,9 +58,8 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    _calendarCarousel = CalendarCarousel<Event>(
+  CalendarCarousel buildCalendarCarousel(){
+    return CalendarCarousel<Event>(
       todayBorderColor: Colors.green,
       onDayPressed: (DateTime date, List<Event> events) {
         showCalendarInputModal(context);
@@ -99,6 +98,11 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
       },
       locale: "ja",
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _calendarCarousel = buildCalendarCarousel();
 
     return new Scaffold(
         appBar: AppBar(),
