@@ -52,17 +52,37 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
 
   CalendarCarousel _calendarCarousel;
 
+  CalendarEditMode calendarEditMode = CalendarEditMode.day;
+
+  calendarModeChanged(CalendarEditMode mode) {
+    setState(() {
+      this.calendarEditMode = mode;
+    });
+  }
+
   @override
   void initState() {
     /// Add more events to _markedDateMap EventList
     super.initState();
   }
 
-  CalendarCarousel buildCalendarCarousel(){
+  CalendarCarousel buildCalendarCarousel() {
     return CalendarCarousel<Event>(
-      todayBorderColor: Colors.green,
+      //todayBorderColor: Colors.green,
       onDayPressed: (DateTime date, List<Event> events) {
-        showCalendarInputModal(context);
+        switch (this.calendarEditMode) {
+          case CalendarEditMode.day:
+            showCalendarInputModal(context);
+            break;
+          case CalendarEditMode.range:
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => SimpleDialog(
+                    children: <Widget>[Text("日付範囲を選択できるようなアクションになる予定です")]));
+            break;
+          default:
+            Error();
+        }
         //this.setState(() => _currentDate2 = date);
         //events.forEach((event) => print(event.title));
       },
@@ -84,7 +104,7 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
         return event.icon;
       },
       todayTextStyle: TextStyle(
-        color: Colors.blue,
+        color: Colors.white,
       ),
       todayButtonColor: Colors.yellow,
       selectedDayTextStyle: TextStyle(
@@ -124,6 +144,20 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
               ),
             ),
           ]),
+          RaisedButton(
+              child: Text("何らかのCycleを追加・編集", style: TextStyle(fontSize: 16)),
+              onPressed: () {
+                if (this.calendarEditMode == CalendarEditMode.day) {
+                  calendarModeChanged(CalendarEditMode.range);
+                } else {
+                  calendarModeChanged(CalendarEditMode.day);
+                }
+              }),
+          Text(this.calendarEditMode == CalendarEditMode.day
+              ? "1日ごとに生理情報入力"
+              : "生理周期の範囲を入力")
         ]));
   }
 }
+
+enum CalendarEditMode { range, day }
