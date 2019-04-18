@@ -72,7 +72,7 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
       onDayPressed: (DateTime date, List<Event> events) {
         switch (this.calendarEditMode) {
           case CalendarEditMode.day:
-            showCalendarInputModal(context);
+            showCalendarInputModal(context, date);
             break;
           case CalendarEditMode.range:
             showDialog(

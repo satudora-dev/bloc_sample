@@ -42,4 +42,21 @@ class HealthProfileRepository {
     print(allHealthProfileList);
     return allHealthProfileList;
   }
+
+  Future<HealthProfile> getByDate(date) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> allHealthProfileStringList =
+        prefs.getStringList(sharedPreferenceKey);
+    final List<HealthProfile> healthProfileList = allHealthProfileStringList
+        .map((s) => HealthProfile.fromJson(jsonDecode(s)))
+        .where((HealthProfile healthProfile) => healthProfile.date == date)
+        .toList();
+    if(healthProfileList.length > 1){
+      Error();
+    }else if (healthProfileList.length == 1){
+      return healthProfileList[0];
+    }else{
+      return null;
+    }
+  }
 }
