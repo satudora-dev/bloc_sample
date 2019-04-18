@@ -37,7 +37,7 @@ class HealthProfileRepository {
     for (var t in allHealthProfileList) {
       print(t.date);
       print(t.bodyTemperature);
-      print(t.height);
+      print(t.weight);
     }
     print(allHealthProfileList);
     return allHealthProfileList;

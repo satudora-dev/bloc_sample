@@ -1,19 +1,18 @@
 class HealthProfile {
   DateTime date;
-  String height;
+  String weight;
   String bodyTemperature;
 
-  HealthProfile(this.date, this.height, this.bodyTemperature);
+  HealthProfile(this.date, this.weight, this.bodyTemperature);
 
-  Map toJson() =>
-      {
+  Map toJson() => {
         "date": date.toIso8601String(),
-        "height": height,
+        "weight": weight,
         "bodyTemperature": bodyTemperature
       };
 
   static HealthProfile fromJson(jsonMap) => HealthProfile(
       DateTime.parse(jsonMap["date"]),
-      jsonMap["height"],
+      jsonMap["weight"],
       jsonMap["bodyTemperature"]);
 }

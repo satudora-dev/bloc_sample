@@ -24,9 +24,11 @@ void main() {
     final allHealthProfileList =
         await healthProfileRepository.getAllHealthProfile();
     for (var i = 0; i < allHealthProfileList.length; i++) {
-      expect(allHealthProfileList[i].height, equals(healthProfileList[i].height));
+      expect(
+          allHealthProfileList[i].weight, equals(healthProfileList[i].weight));
       expect(allHealthProfileList[i].date, equals(healthProfileList[i].date));
-      expect(allHealthProfileList[i].bodyTemperature, equals(healthProfileList[i].bodyTemperature));
+      expect(allHealthProfileList[i].bodyTemperature,
+          equals(healthProfileList[i].bodyTemperature));
     }
   });
 }
