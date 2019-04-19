@@ -31,4 +31,17 @@ void main() {
           equals(healthProfileList[i].bodyTemperature));
     }
   });
+
+  test("health profileデータのreset", () async {
+    final healthProfileRepository = HealthProfileRepository();
+    healthProfileRepository.reset();
+    healthProfileRepository.save(HealthProfile(DateTime.now(), "60", "36.0"));
+    final allHealthProfileList =
+        await healthProfileRepository.getAllHealthProfile();
+    expect(allHealthProfileList.length, 1);
+    await healthProfileRepository.reset();
+    final allHealthProfileListAfterReset =
+    await healthProfileRepository.getAllHealthProfile();
+    expect(allHealthProfileListAfterReset, null);
+  });
 }
