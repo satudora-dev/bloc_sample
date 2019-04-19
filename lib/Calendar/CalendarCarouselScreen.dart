@@ -7,6 +7,8 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import './showCalendarInputModal.dart';
 
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+
 class CalendarCarouselScreen extends StatefulWidget {
   @override
   _CalendarCarouselState createState() => new _CalendarCarouselState();
@@ -144,8 +146,9 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
               ),
             ),
           ]),
+          /*
           RaisedButton(
-              child: Text("何らかのCycleを追加・編集", style: TextStyle(fontSize: 16)),
+              child: Text("入力モード切り替え", style: TextStyle(fontSize: 16)),
               onPressed: () {
                 if (this.calendarEditMode == CalendarEditMode.day) {
                   calendarModeChanged(CalendarEditMode.range);
@@ -156,8 +159,52 @@ class _CalendarCarouselState extends State<CalendarCarouselScreen> {
           Text(this.calendarEditMode == CalendarEditMode.day
               ? "1日ごとに生理情報入力"
               : "生理周期の範囲を入力")
+          */
+          RaisedButton(
+            onPressed: () async {
+              final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                  context: context,
+                  initialFirstDate: new DateTime.now(),
+                  initialLastDate:
+                      (new DateTime.now()).add(new Duration(days: 7)),
+                  firstDate: new DateTime(2015),
+                  lastDate: new DateTime(2020));
+              if (picked != null && picked.length == 2) {
+                //print(picked);
+                addPeriodRangeToCarouselCalendar(picked[0], picked[1]);
+              }
+            },
+            child: Text("生理周期を入力", style: TextStyle(fontSize: 16)),
+          )
         ]));
+  }
+
+  void addPeriodRangeToCarouselCalendar(
+      beginDate, endDate) {
+    Widget _rangePieceIcon = new Container(
+      decoration: new BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.all(Radius.circular(1)),
+          border: Border.all(color: Colors.blue, width: 2.0)),
+    );
+
+    print([beginDate, endDate]);
+    for (var date = beginDate; date.isBefore(endDate); date=date.add(new Duration(days: 1))) {
+      {
+        print(date);
+        _markedDateMap.add(
+          date,
+          new Event(
+            date: new DateTime(2019, 4, 10),
+            title: 'Event 4',
+            icon: _rangePieceIcon,
+          ),
+        );
+      }
+    }
+    setState(() {});
   }
 }
 
 enum CalendarEditMode { range, day }
+
