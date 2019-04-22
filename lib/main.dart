@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bloc_provider/bloc_provider.dart';
 
 import './connection_bloc.dart';
-import './merpay_modal/merpay_modal_bloc.dart';
-import './merpay_modal/bloc_merpay_view.dart';
+import './merpay_modal/go_to_merpay_trace_button.dart';
+import './Calendar/GoToCalendarButton.dart';
 
 void main() => runApp(
       BlocProviderTree(
@@ -28,14 +28,10 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(title: Text('Bloc Test')),
-        body: BlocProviderTree(
-          blocProviders: [
-            BlocProvider<MerpayModalBloc>(
-              creator: (context, _bag) => MerpayModalBloc(),
-            ),
-          ],
-          child: BlocMerpayView(),
-        ),
+        body: Column(children: <Widget>[
+          GoToMerpayTraceButton(),
+          ButtonToCalendarScreen()
+        ]),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
