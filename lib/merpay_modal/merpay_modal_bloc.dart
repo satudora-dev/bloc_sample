@@ -14,6 +14,9 @@ class MerpayModalBloc extends Bloc {
   final _chargingViewVisible = BehaviorSubject<bool>.seeded(false);
   final _chargingViewVisualizeController = PublishSubject<bool>();
 
+  final _animationCompleted = BehaviorSubject<bool>.seeded(false);
+  final _completeAnimationController = PublishSubject<void>();
+
   final _completeProcedureController = PublishSubject<void>();
 
   MerpayModalBloc() {
@@ -38,6 +41,11 @@ class MerpayModalBloc extends Bloc {
       }
     });
 
+    _completeAnimationController.listen((_) {
+      _animationCompleted.add(true);
+      _completeProcedureController.add(null);
+    });
+
     _completeProcedureController.listen((_) {
       chargeViewVisualize.add(false);
       chargingViewVisualize.add(false);
@@ -53,6 +61,9 @@ class MerpayModalBloc extends Bloc {
   ValueObservable<bool> get chargingViewVisible => _chargingViewVisible;
   Sink<bool> get chargingViewVisualize => _chargingViewVisualizeController;
 
+  ValueObservable<bool> get animationCompleted => _animationCompleted;
+  Sink<void> get completeAnimation => _completeAnimationController;
+
   @override
   void dispose() async {
     _chargeBloc.dispose();
@@ -63,6 +74,9 @@ class MerpayModalBloc extends Bloc {
 
     await _chargingViewVisible.close();
     await _chargingViewVisualizeController.close();
+
+    await _animationCompleted.close();
+    await _completeAnimationController.close();
 
     await _completeProcedureController.close();
   }
